@@ -1,0 +1,17 @@
+POST http://localhost:3000/api/services
+Content-Type: application/json
+
+{
+    "name": "Algum serviço 2",
+    "description": "festa muito divertida",
+    "price": 13550,
+    "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fbr%2Fphotos%2Fbrasil.html&psig=AOvVaw0cXrkEXe9MIAQK6FHDTEsw&ust=1730993058368000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODTmqGCyIkDFQAAAAAdAAAAABAE"
+}
+
+###
+
+GET http://localhost:3000/api/services
+
+###
+
+GET http://localhost:3000/api/services/672b8b52aaa1278262c0f9f6
