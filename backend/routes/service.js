@@ -8,7 +8,7 @@ router
 
 router
   .route("/services")
-.get((req, res) => serviceController.getAll(req, res));
+  .get((req, res) => serviceController.getAll(req, res));
 
 router
   .route("/services/:id")

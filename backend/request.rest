@@ -31,3 +31,16 @@ Content-Type: application/json
     "price": 1500,
     "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fbr%2Fphotos%2Fbrasil.html&psig=AOvVaw0cXrkEXe9MIAQK6FHDTEsw&ust=1730993058368000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODTmqGCyIkDFQAAAAAdAAAAABAE"
 }
+
+###
+
+POST  http://localhost:3000/api/parties
+Content-Type: application/json
+
+{
+    "title": "Festinha de 18",
+    "author": "Eduardo Lira",
+    "description": "Uma festa para comemorar mais um ano de vida",
+    "budget": 2000,
+    "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fbr%2Fphotos%2Fbrasil.html&psig=AOvVaw0cXrkEXe9MIAQK6FHDTEsw&ust=1730993058368000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODTmqGCyIkDFQAAAAAdAAAAABAE"
+}
