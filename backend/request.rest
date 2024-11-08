@@ -65,8 +65,35 @@ GET http://localhost:3000/api/parties
 
 ###
 
-GET http://localhost:3000/api/parties/672c1fffc3ef94ff86bf1858
+GET http://localhost:3000/api/parties/672cdbd5f4f3d56add2ce665
 
 ###
 
 DELETE http://localhost:3000/api/parties/672c1fffc3ef94ff86bf1858
+
+###
+
+PUT http://localhost:3000/api/parties/672cdbd5f4f3d56add2ce665
+Content-Type: application/json
+
+{
+    "title": "Festinha de 21",
+    "author": "Eduardo Lira da Cunha Neto",
+    "description": "Uma festa para comemorar mais um ano de vida",
+    "budget": 10000,
+    "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fbr%2Fphotos%2Fbrasil.html&psig=AOvVaw0cXrkEXe9MIAQK6FHDTEsw&ust=1730993058368000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODTmqGCyIkDFQAAAAAdAAAAABAE",
+    "services": [
+        {
+            "name": "Algum serviço 1",
+            "description": "topzeraaaa",
+            "price": 3000,
+            "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fbr%2Fphotos%2Fbrasil.html&psig=AOvVaw0cXrkEXe9MIAQK6FHDTEsw&ust=1730993058368000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODTmqGCyIkDFQAAAAAdAAAAABAE"
+        },
+        {
+            "name": "Algum serviço 2",
+            "description": "perfeito",
+            "price": 1600,
+            "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fbr%2Fphotos%2Fbrasil.html&psig=AOvVaw0cXrkEXe9MIAQK6FHDTEsw&ust=1730993058368000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODTmqGCyIkDFQAAAAAdAAAAABAE"
+        }
+    ]
+}
