@@ -37,29 +37,45 @@ const partyController = {
   },
   getAll: async (req, res) => {
     try {
-
       const parties = await PartyModel.find();
 
       res.json(parties);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   },
-  get: async(req, res) => {
+  get: async (req, res) => {
     try {
       const id = req.params.id;
 
-      const party = await PartyModel.findById(id)
+      const party = await PartyModel.findById(id);
 
-      if(!party){
-        res.status(404).json({msg: "Festa não encontrada!"})
+      if (!party) {
+        res.status(404).json({ msg: "Festa não encontrada!" });
+
+        return;
       }
 
-      res.json(party)
+      res.json(party);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  },
+  delete: async (req, res) => {
+    const id = req.params.id;
+
+    const party = await PartyModel.findById(id);
+
+    if (!party) {
+      res.status(404).json({ msg: "Festa não encontrada!" });
+
+      return;
+    }
+
+    const deleteParty = await PartyModel.findByIdAndDelete(id)
+
+    res.status(200).json({deleteParty, msg: "Festa excluida com sucesso!"})
+  },
 };
 
 module.exports = partyController;

@@ -11,4 +11,7 @@ router.route("/parties").get((req, res) => partyController.getAll(req, res));
 // returns individual parties
 router.route("/parties/:id").get((req, res) => partyController.get(req, res));
 
+// delete parties
+router.route("/parties/:id").delete((req, res) => partyController.delete(req, res))
+
 module.exports = router;
