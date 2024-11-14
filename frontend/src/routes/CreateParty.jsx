@@ -16,6 +16,8 @@ const CreateParty = () => {
   const [image, setImage] = useState("")
   const [partyServices, setPartyServices] = useState([])
 
+  const navigate = useNavigate()
+
   // Load services 
   useEffect(() => {
     const loadServices = async () => {
@@ -26,12 +28,31 @@ const CreateParty = () => {
     loadServices();
   }, [])
 
+  // Add or remove services
+  const handleServices = (e) => {
+    const checked = e.target.checked;
+
+    const value = e.target.value;
+
+    const filteredService = services.filter((s) => s._id === value)
+
+    console.log(filteredService)
+
+    if (checked) {
+      setPartyServices((services) => [...services, filteredService[0]]);
+    } else {
+      setPartyServices((services) => services.filter((s) => s._id !== value));
+    }
+
+    console.log(partyServices)
+  }
+
   // Create a new party
-  const createParty = (e) => {
+  const createParty = async (e) => {
     e.preventDefault();
 
     const party = {
-      title, 
+      title,
       author,
       description,
       budget,
@@ -39,7 +60,11 @@ const CreateParty = () => {
       services: partyServices
     }
 
-    console.log(party)
+    const res = await partyFetch.post("/parties", party);
+
+    if(res.status === 201){
+      navigate("/")
+    }
   }
 
   return (
@@ -49,9 +74,9 @@ const CreateParty = () => {
       <form onSubmit={(e) => createParty(e)}>
         <label>
           <span>Nome da festa:</span>
-          <input 
-            type="text" 
-            placeholder="Seja criativo..." 
+          <input
+            type="text"
+            placeholder="Seja criativo..."
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -59,10 +84,10 @@ const CreateParty = () => {
         </label>
         <label>
           <span>Anfitrião:</span>
-          <input 
-            type="text" 
-            placeholder="Quem está dando a festa?" 
-            required 
+          <input
+            type="text"
+            placeholder="Quem está dando a festa?"
+            required
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
           />
@@ -106,7 +131,11 @@ const CreateParty = () => {
                 <p className="service-name">{service.name}</p>
                 <p className="service-price">{service.price}</p>
                 <div className="checkbox-container">
-                  <input type="checkbox" value={service._id} />
+                  <input
+                    type="checkbox"
+                    value={service._id}
+                    onChange={(e) => handleServices(e)}
+                  />
                   <p>Marque para solicitar</p>
                 </div>
               </div>
