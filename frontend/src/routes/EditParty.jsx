@@ -9,13 +9,13 @@ import useToast from "../hooks/useToast";
 import "./Form.css";
 
 const EditParty = () => {
-  const id = useParams();
+  const { id } = useParams();
 
   const [party, setParty] = useState(null);
 
-  if (!party) return <p>Carregando...</p>;
-
   const [services, setServices] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Load services
@@ -23,9 +23,9 @@ const EditParty = () => {
       const res = await partyFetch.get("/services");
 
       setServices(res.data);
-    };
-    loadServices();
 
+      loadParty();
+    };
     // Load Party
     const loadParty = async () => {
       const res = await partyFetch.get(`/parties/${id}`);
@@ -33,12 +33,43 @@ const EditParty = () => {
       setParty(res.data);
     };
 
-    loadParty();
+    loadServices();
   }, []);
 
-  const upadateParty = (e) => {
-    e.preventDefault();
+  // Add or remove services
+  const handleServices = (e) => {
+    const checked = e.target.checked;
+
+    const value = e.target.value;
+
+    const filteredService = services.filter((s) => s._id === value);
+
+    let partyServices = party.services;
+
+    if (checked) {
+      partyServices = [...partyServices, filteredService[0]];
+    } else {
+      partyServices = partyServices.filter((s) => s._id !== value);
+    }
+
+    setParty({ ...party, services: partyServices });
   };
+
+  const upadateParty = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await partyFetch.put(`/parties/${party._id}`, party);
+
+      if (res.status === 200) {
+        navigate(`/party/${id}`)
+      }
+
+    } catch (error) {
+      useToast(error.response.data.msg, "error");
+    }
+  };
+
+  if (!party) return <p>Carregando...</p>;
 
   return (
     <div className="form-page">
@@ -52,7 +83,7 @@ const EditParty = () => {
             placeholder="Seja criativo..."
             required
             value={party.title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setParty({ ...party, title: e.target.value })}
           />
         </label>
         <label>
@@ -62,7 +93,7 @@ const EditParty = () => {
             placeholder="Quem está dando a festa?"
             required
             value={party.author}
-            onChange={(e) => setAuthor(e.target.value)}
+            onChange={(e) => setParty({ ...party, author: e.target.value })}
           />
         </label>
         <label>
@@ -71,7 +102,9 @@ const EditParty = () => {
             placeholder="Conte mais sobre a festa..."
             required
             value={party.description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) =>
+              setParty({ ...party, description: e.target.value })
+            }
           ></textarea>
         </label>
         <label>
@@ -81,7 +114,7 @@ const EditParty = () => {
             placeholder="Quanto você pretende investir?"
             required
             value={party.budget}
-            onChange={(e) => setBudget(e.target.value)}
+            onChange={(e) => setParty({ ...party, budget: e.target.value })}
           />
         </label>
         <label>
@@ -91,7 +124,7 @@ const EditParty = () => {
             placeholder="Insira a URL de uma imagem"
             required
             value={party.image}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setParty({ ...party, image: e.target.value })}
           />
         </label>
         <div>
@@ -109,6 +142,11 @@ const EditParty = () => {
                       type="checkbox"
                       value={service._id}
                       onChange={(e) => handleServices(e)}
+                      checked={
+                        party.services.find(
+                          (partyService) => partyService._id === service._id
+                        ) || ""
+                      }
                     />
                     <p>Marque para solicitar</p>
                   </div>
@@ -116,7 +154,7 @@ const EditParty = () => {
               ))}
           </div>
         </div>
-        <input type="submit" value="Criar Festa" className="btn" />
+        <input type="submit" value="Atualizar Festa" className="btn" />
       </form>
     </div>
   );
